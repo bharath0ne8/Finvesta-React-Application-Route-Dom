@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: frontend-admin-panel-ingress
+  namespace: finvesta-namespace
+spec:
+  tls:
+  - hosts:
+    - networkmanagertest.fiaglobal.com
+    secretName: fivesta-secret
+  rules:
+  - host: networkmanagertest.fiaglobal.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend-admin-panel-service
+            port:
+              number: 80

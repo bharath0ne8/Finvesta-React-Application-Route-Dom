@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-agent-onboarding-deployment
+  namespace: finvesta-namespace
+  labels:
+    app: frontend-agent-onboarding
+spec:
+  selector:
+    matchLabels:
+      app: frontend-agent-onboarding
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: frontend-agent-onboarding
+    spec:
+      containers:
+        - name: frontend-agent-onboarding-container
+          image: frontend-agent-onboarding-image
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 80
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-agent-onboarding-service
+  namespace: finvesta-namespace
+  labels:
+    app: frontend-agent-onboarding
+spec:
+  selector:
+    app: frontend-agent-onboarding
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
